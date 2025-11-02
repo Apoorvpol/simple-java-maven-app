@@ -1,23 +1,22 @@
 pipeline {
-    agent any
-    options {
-        skipStagesAfterUnstable()
-    }
+    agent {
+  label 'DevServer'
+}
+
     stages {
-        stage('Build') {
+        stage('Build') 
+        {
             steps {
                 echo "this is build stage"
             }
+            post {
+            success {
+                     ArchiveArtifacts artifacts: '**/target/*.war'
+                    }
+                  }
         }
-        stage('Test') {
-            steps {
-                echo "this is test stage"
-            } 
+        
         }
-        stage('Deploy') { 
-            steps {
-                echo "this is deploy stage"
-            }
+        
         }
-    }
-}
+
